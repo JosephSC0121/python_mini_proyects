@@ -50,7 +50,7 @@ def main(var, fun, sup, inf):
         # Agregar expresión LaTeX renderizada
         doc.append('Expresión:')
         doc.append(Math(data=sp.latex(funcion), escape=False))
-        doc.append('Integral que calcula el área')
+        doc.append('Integral que calcula el área: ')
         doc.append(Math(data=sp.latex(integral), escape=False))
         doc.append('Resultado:')
         doc.append(Math(data=sp.latex(area), escape=False))
