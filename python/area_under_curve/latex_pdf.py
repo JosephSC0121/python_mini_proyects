@@ -19,6 +19,7 @@ def main(var, fun, sup, inf):
         a = inf
         b = sup
     # Cálculo del área utilizando la función de SymPy
+    integral = sp.Integral(funcion,(variable,a,b))
     area = sp.integrate(funcion, (variable, a, b))
 
     # Graficar la curva y el área bajo la curva
@@ -41,7 +42,7 @@ def main(var, fun, sup, inf):
     plt.savefig(plot_path)
 
     # Crear el documento LaTeX en la ruta del script
-    doc_path = os.path.join(script_path, 'resultado.tex')
+    doc_path = os.path.join(script_path, 'resultado')
     doc = Document(doc_path)
 
     # Agregar sección
@@ -49,6 +50,8 @@ def main(var, fun, sup, inf):
         # Agregar expresión LaTeX renderizada
         doc.append('Expresión:')
         doc.append(Math(data=sp.latex(funcion), escape=False))
+        doc.append('Integral que calcula el área')
+        doc.append(Math(data=sp.latex(integral), escape=False))
         doc.append('Resultado:')
         doc.append(Math(data=sp.latex(area), escape=False))
 
@@ -59,11 +62,8 @@ def main(var, fun, sup, inf):
                 plot.add_caption('Gráfica de la curva')
 
     # Guardar el PDF en la ruta del script
-    pdf_path = os.path.join(script_path, 'resultado.pdf')
+    pdf_path = os.path.join(script_path, 'resultado')
     doc.generate_pdf(pdf_path, clean_tex=False)
-
-    # Mostrar el área calculada
-    print(f'El área bajo la curva es: {area}')
 
     # Mostrar la ruta del archivo PDF
     print(f'PDF guardado en: {pdf_path}')
