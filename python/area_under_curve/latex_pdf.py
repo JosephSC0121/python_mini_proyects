@@ -25,11 +25,12 @@ def main(var, fun, sup, inf):
     with doc.create(Section('Resultado')):
         # Agregar expresión LaTeX renderizada
         doc.append('Expresión:')
-        doc.append(Math(data=[sp.latex(funcion)]))
+        doc.append(Math(data=sp.latex(funcion), escape=False))
         doc.append('Resultado:')
-        doc.append(Math(data=[sp.latex(area)]))
+        doc.append(Math(data=sp.latex(area), escape=False))
 
     # Guardar el PDF
+    doc.generate_tex()
     doc.generate_pdf('resultado', clean_tex=False)
 
     # Mostrar el área calculada
