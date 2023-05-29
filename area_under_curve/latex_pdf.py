@@ -38,7 +38,7 @@ def main(var, fun, sup, inf):
     script_path = os.path.dirname(os.path.abspath(__file__))
 
     # Guardar la figura como imagen en la ruta del script
-    plot_path = os.path.join(script_path, 'plot.png')
+    plot_path = os.path.join(script_path, 'plotself.png')
     plt.savefig(plot_path)
 
     # Crear el documento LaTeX en la ruta del script
