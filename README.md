@@ -5,10 +5,15 @@ This project is a simple Python script that converts data from a JSON file to a 
 The script follows the following steps:
 
 1.Reads the input data from the input.json file.
+
 2.Converts the JSON data into a Python dictionary using the json.loads() function.
+
 3.Constructs a CSV string by joining the keys of the first dictionary object.
+
 4.Iterates over each dictionary object in the data.
+
 5.Appends a new line to the CSV string for each dictionary object, containing the values for the keys "Name", "age", and "birthyear".
+
 6.Writes the CSV string to the output.csv file.
 
 # Usage
