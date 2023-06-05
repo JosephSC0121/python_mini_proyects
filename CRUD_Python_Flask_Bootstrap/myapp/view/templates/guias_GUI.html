@@ -37,10 +37,11 @@
                             <label for="grupo" class="form-label">Grupo</label>
                             <input type="text" class="form-control" id="grupo" name="grupo" required>
                         </div>
+
                     </div>
                     <div class="row">
                         <div class="col text-center">
-                            <button class="btn btn-primary" type="submit">Nuevo Guia</button>
+                            <button class="btn btn-primary" type="submit">Enviar</button>
                             <button class="btn btn-secondary btn-danger" type="reset">Cancelar</button>
                         </div>
                     </div>
@@ -55,6 +56,7 @@
                             <th scope="col">Apellido</th>
                             <th scope="col">Disponibilidad</th>
                             <th scope="col">Grupo</th>
+                            <th scope="col">Fecha y Hora</th>
                             <th scope="col">Editar</th>
                             <th scope="col">Borrar</th>
                         </tr>
@@ -68,6 +70,7 @@
                                 <td>{{ d.apellido }}</td>
                                 <td>{{ d.disponibilidad }}</td>
                                 <td>{{ d.grupo }}</td>
+                                <td>{{ d.fecha.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                                 <td>
                                     <button class="btn btn-primary btn-sm" id="btn-edit{{ d.id }}" data-bs-toggle="modal" data-bs-target="#modal{{ d.id }}">Editar</button>
                                     <div class="modal fade" id="modal{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -89,6 +92,8 @@
                                                         <input type="text" class="form-control" id="edit-disponibilidad" name="disponibilidad" value="{{ d.disponibilidad }}" required>
                                                         <label for="edit-grupo" class="form-label">Grupo</label>
                                                         <input type="text" class="form-control" id="edit-grupo" name="grupo" value="{{ d.grupo }}" required>
+                                                        <label for="edit-fecha" class="form-label">Fecha</label>
+                                                        <input type="text" class="form-control" id="edit-fecha" name="fecha" value="{{ d.fecha }}" required>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
@@ -108,6 +113,8 @@
                 </table>
             </div>
         </div>
+
+        </script>
     </div>
 </body>
 </html>

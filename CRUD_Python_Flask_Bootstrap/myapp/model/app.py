@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, url_for, redirect
 import os
 import sys
-sys.path.append('model/')
+from datetime import datetime
+sys.path.append('controller/')
 from database import Database
 
 class MyApp(Flask):
@@ -18,11 +19,13 @@ class MyApp(Flask):
         insert_object = [dict(zip(column_names, record)) for record in myresult]
         return insert_object
 
+
     def add_user(self, cedula_guia, nombre, apellido, disponibilidad, grupo):
         if cedula_guia and nombre and apellido and disponibilidad and grupo:
             cursor = self.database.connection.cursor()
-            sql = "INSERT INTO GUIAS (cedula_guia, nombre, apellido, disponibilidad, grupo) VALUES (%s,%s,%s,%s,%s)"
-            data = (cedula_guia, nombre, apellido, disponibilidad, grupo)
+            sql = "INSERT INTO GUIAS (cedula_guia, nombre, apellido, disponibilidad, grupo, fecha) VALUES (%s,%s,%s,%s,%s,%s)"
+            fecha = datetime.now()
+            data = (cedula_guia, nombre, apellido, disponibilidad, grupo, fecha)
             cursor.execute(sql, data)
             self.database.connection.commit()
 
@@ -45,7 +48,7 @@ template_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 template_dir = os.path.join(template_dir, 'view', 'templates')
 
 # Crear una instancia de la clase Database
-database = Database(host='localhost', user='root', password='joseph', database='hotel_villa')
+database = Database(host='localhost', user='root', password='joseph', database='villa_daniela')
 database.connect()
 
 # Crear una instancia de la clase MyApp, pasando la instancia de Database
