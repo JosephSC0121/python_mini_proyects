@@ -20,6 +20,6 @@ def ask_openai(message):
 def chatbot(request):
     if request.method == 'POST':
         message =  request.POST.get('message')
-        response = 'Aregar key de OPENAI'
+        response = 'Agregar key de OPENAI'
         return JsonResponse({'message': message, 'response': response})
     return render(request, 'chatbot.html') 
