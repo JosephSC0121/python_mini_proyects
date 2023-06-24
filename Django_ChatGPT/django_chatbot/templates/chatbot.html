@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<style>
+    body, html {
+      height: 100%;
+    }
+
+    .card-header{
+      text-align: center;
+    }
+
+    .messages-box {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .messages-list {
+      padding-left: 0;
+    }
+
+    .message {
+      margin-bottom: 15px;
+      list-style: none;
+    }
+
+    .message-text {
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .sent {
+      background-color: #e3e3e3;
+      align-self: flex-end;
+    }
+
+    .received {
+      background-color: #f1f0f0;
+      align-self: flex-start;
+    }
+
+    .message-form {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background-color: 000000;
+    }
+
+    .message-input {
+      flex: 1;
+      border-radius: 0;
+      border-right: none;
+    }
+
+    .btn-send {
+      border-radius: 0;
+      border-color: black;
+      background-color: black;
+    }
+
+    .chat-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .custom-bg-gray {
+    background-color: #8e8888; /* Aquí puedes ajustar el valor del color gris claro */
+    }
+    .message-input:focus {
+    border-color: black; 
+    box-shadow: none; 
+    }
+
+  </style>
+{% endblock %}
+
+
+{% block content %}
+<div class="chat-container">
+  <div class="card flex-grow-1 custom-bg-gray">
+    <div class="card-header bg-dark text-white">Chat</div>
+    <div class="card-body custom-bg-gray messages-box">
+      
+      <ul class="list-unstyled messages-list">
+        
+        <li class="message received">
+          <div class="message-text">
+            <div class="message-sender">
+              <b>Nidalee</b>
+            </div>
+            <div class="message-content">
+              Hi, I am Nidalee, you can ask me anything.
+            </div>
+          </div>
+        </li>
+      </ul>
+      
+    </div>
+    <br><br>
+    <br><br>
+    <br><br>
+  </div>
+  <form class="message-form custom-bg-gray">
+    {%csrf_token%}
+    <div class="input-group">
+      <input type="text" class="form-control message-input" placeholder="Type your message...">
+      <div class="input-group-append ">
+        <button type="submit" class="btn btn-primary bg-dark btn-send">Send</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  const messagesList = document.querySelector('.messages-list');
+  const messageForm = document.querySelector('.message-form');
+  const messageInput = document.querySelector('.message-input');
+
+  messageForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const message = messageInput.value.trim();
+    if (message.length === 0) {
+      return;
+    }
+
+    const messageItem = document.createElement('li');
+    messageItem.classList.add('message', 'sent');
+    messageItem.innerHTML = `
+        <div class="message-text">
+            <div class="message-sender">
+                <b>You</b>
+            </div>
+            <div class="message-content">
+                ${message}
+            </div>
+        </div>`;
+    messagesList.appendChild(messageItem);
+
+    messageInput.value = '';
+
+    fetch('', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        'message': message
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        const response = data.response;
+        const messageItem = document.createElement('li');
+        messageItem.classList.add('message', 'received');
+        messageItem.innerHTML = `
+        <div class="message-text">
+            <div class="message-sender">
+              <b>Nidalee</b>
+            </div>
+            <div class="message-content">
+                ${response}
+            </div>
+        </div>
+          `;
+        messagesList.appendChild(messageItem);
+      });
+  });
+
+</script>
+
+
+
+{% endblock %}
